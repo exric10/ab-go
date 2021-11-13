@@ -1,6 +1,6 @@
 # ab-go
 
-We were told to test a web server with **Apache Benchmark**. In my case, I have chosen **Nginx** in order to create the web that will be run with **Docker**.
+We were told to test a web server with **Apache Benchmark**. In my case, I have chosen **Nginx** in order to create the web that will be run with **Docker**. Moreover, we have to implement `ab` in **Go** and a HTTP server.
 
 # Testing ab
 
@@ -20,8 +20,10 @@ sudo docker build -t ab .
 After it, we are able to use `ab` from **Docker** to benchmark the web server. The use of `ab` through **Docker** will be done with commands like:
 
 ```
-sudo docker run --rm ab -c 100 -n 100000 -k http://172.17.0.1:8080/    *(this IP points to the Docker brige address)*
+sudo docker run --rm ab -c 100 -n 100000 -k http://172.17.0.1:8080/
 ```
+
+*(the IP of the command points to the Docker brige address, it means, our web)*
 
 ## Results
 
@@ -53,20 +55,20 @@ As we can see the values does not differ that much between the two first ones. H
 
 ### Fixed amount of requests
 
-### 100000 requests and 100 concurrent requests
+#### 100000 requests and 100 concurrent requests
 
 ![](/images/zoom_ab_n100000_c100_k.png)
 
-### 100000 requests and 500 concurrent requests
+#### 100000 requests and 500 concurrent requests
 
 ![](/images/zoom_ab_n100000_c500_k.png)
 
-### 100000 requests and 750 concurrent requests
+#### 100000 requests and 750 concurrent requests
 
-![](/images/zoom_ab_n100000_c7500_k.png)
+![](/images/zoom_ab_n100000_c750_k.png)
 
 
 In this case, we can observe that it only varies the *Time per request(mean)* row, and, as we increase more the concurrency, more it grows. This means that we need more time per each request, which seems normal as we are receiving more concurrent requests.
 
 
-# Implementation of ab in GO
+# Implementation of ab in Go
