@@ -51,7 +51,7 @@ You can find the full outputs on the ***images*** directory.
 ![](/images/zoom_ab_n100000_c80_k.png)
 
 
-As we can see the values does not differ that much between the two first ones. However, the last one got a lower result on the requests per second. This could be due to the huge amount of requests in a small portion of time. Both time per request values are more or less the same because we are not varying the concurrency level.
+The value that is changing more is the total time, which is expected, as we are increasing the number of requests. However, the last one got a lower result on the requests per second. This could be due to the huge amount of requests in a small portion of time. The time per request values are more or less the same because we are not varying the concurrency level.
 
 ### Fixed amount of requests
 
@@ -72,3 +72,54 @@ In this case, we can observe that it only varies the *Time per request(mean)* ro
 
 
 # Implementation of ab in Go
+
+Now we were told to implement **Apache Benchmark** on Go, including the `-n,-c,-k` parameters, which defines the number of requests, the number of concurrent requests and the decision whether activate the Keep-Alive feature or not.
+
+You can find the implementation on the ***goab.go*** file
+
+First, I have made a little test in order to check the correct use of the Keep-Alive feature, which means that a single connection remains open for multiple requests. As we can see in the image below, when I put the `-k` parameter, the connection is reused, this information can be obtained with the help of the `httptrace` package.
+
+![](/images/keep-alive_proof.png)
+
+To compare if the implementation is working correctly, I am going to run the same test that I made with `ab` and they should have the same behaviour.
+
+## Results
+
+### Fixed concurrency
+
+#### 1000 requests and 80 concurrent requests
+
+![](/images/goab_n1000_c80_k.png)
+
+#### 10000 requests and 80 concurrent requests
+
+![](/images/goab_n10000_c80_k.png)
+
+#### 100000 requests and 80 concurrent requests
+
+![](/images/goab_n100000_c80_k.png)
+
+
+As it happened with `ab`, as we increase the number of requests, the time taken for the tests is also increasing. Besides, the rest of values are not varying that much, as it occurred with the `ab` test.
+
+
+### Fixed amount of requests
+
+#### 100000 requests and 100 concurrent requests
+
+![](/images/goab_n100000_c100_k.png)
+
+#### 100000 requests and 500 concurrent requests
+
+![](/images/goab_n100000_c500_k.png)
+
+#### 100000 requests and 750 concurrent requests
+
+![](/images/goab_n100000_c750_k.png)
+
+
+In the test of `ab`, we saw that only the *Time per request(mean)* row was varying, which is what is also happening in the test with `goab`, while the other features remain with similar values.
+
+
+# Implementation of an HTTP server in Go
+
