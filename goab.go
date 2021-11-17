@@ -152,7 +152,7 @@ func main() {
 	testWeb(n,c,k,link)
 
 	fmt.Printf("Concurrency level: %d\n", c)
-	fmt.Printf("Time taken for tests: %g\n", latency.Seconds())
+	fmt.Printf("Time taken for tests: %g [sec]\n", latency.Seconds())
 	fmt.Printf("Completed requests: %d\n", n-errors)
 	fmt.Printf("Errored responses: %d (amount), %g (percentage)\n",errors, (float64(errors)/float64(n)) * 100)
 	fmt.Printf("Keep-Alive requests: %d\n", kareq)
