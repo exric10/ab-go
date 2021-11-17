@@ -73,7 +73,7 @@ In this case, we can observe that it only varies the *Time per request(mean)* ro
 
 # Implementation of ab in Go
 
-Now we were told to implement **Apache Benchmark** on Go, including the `-n,-c,-k` parameters, which defines the number of requests, the number of concurrent requests and the decision whether activate the Keep-Alive feature or not.
+Now we were told to implement **Apache Benchmark** on Go, including the `-n`, `-c`, `-k` parameters, which defines the number of requests, the number of concurrent requests and whether to activate the Keep-Alive feature or not.
 
 You can find the implementation on the ***goab.go*** file
 
@@ -81,7 +81,7 @@ First, I have made a little test in order to check the correct use of the Keep-A
 
 ![](/images/keep-alive_proof.png)
 
-To compare if the implementation is working correctly, I am going to run the same test that I made with `ab` and they should have the same behaviour.
+To compare if the implementation is working correctly, I am going to run the same tests that I made with `ab`, and they should have the same behaviour.
 
 ## Results
 
