@@ -121,5 +121,57 @@ As it happened with `ab`, as we increase the number of requests, the time taken 
 In the test of `ab`, we saw that only the *Time per request(mean)* row was varying, which is what is also happening in the test with `goab`, while the other features remain with similar values.
 
 
-# Implementation of an HTTP server in Go
+# Implementation of a HTTP server in Go
+
+Finally, we had to create a HTTP server with Go. In order to create it, I have searched and created a simple one.
+Due to the way we have created the server, his URL is:
+
+```
+http://localhost:8090/hello/
+```
+
+The implementation can be found on the ***httpserver*** directory.
+
+And now, we are going to test the server with `goab` as we did on the last test, just to see if exist difference about executing our own server or execute it on a web server as I did with **Nginx**.
+
+
+## Results
+
+### Fixed concurrency
+
+#### 1000 requests and 80 concurrent requests
+
+![](/images/goab_httpserver_n1000_c80_k.png)
+
+#### 10000 requests and 80 concurrent requests
+
+![](/images/goab_httpserver_n10000_c80_k.png)
+
+#### 100000 requests and 80 concurrent requests
+
+![](/images/goab_httpserver_n100000_c80_k.png)
+
+
+If we compare it with the results of the last test, we can observe that the keep-alive feature is working better as we only have 1 request that is not supporting it (which is the first one, so it is normal). In the third case we obtain a smaller time, therefore, we have better results in the average of the latency and in the requests per second.
+
+
+### Fixed amount of requests
+
+#### 100000 requests and 100 concurrent requests
+
+![](/images/goab_httpserver_n100000_c100_k.png)
+
+#### 100000 requests and 500 concurrent requests
+
+![](/images/goab_httpserver_n100000_c500_k.png)
+
+#### 100000 requests and 750 concurrent requests
+
+![](/images/goab_httpserver_n100000_c750_k.png)
+
+
+The behaviour is the same as before, increasing the concurrency we obtain a bigger latency. However, as we told on the fixed concurrency test, the time for the whole test is less than before, so the latency is smaller than the one we obtained with the web server.
+
+
+
 
