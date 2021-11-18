@@ -33,7 +33,7 @@ It is important to remark that we are obtaining outputs like this:
 
 ![](/images/ab_n1000_c80_k.png)
 
-Although we are going to focus on the *Requests per second, Time per request(mean), Time per request(mean, across all concurrent requests)* rows. The *Time per request(mean)* value is computed by adding the time of each request and dividing it by the total number of requests, while the *Time per request(mean, across all concurrent requests)*, is computed by dividing the time taken for the test with the number of requests.
+Although we are going to focus on the *Requests per second, Time per request(mean), Time per request(mean, across all concurrent requests)* rows. The *Time per request(mean)* value is computed by multiplying the concurrency level with the time taken for the test, and dividing it by the total number of requests, while the *Time per request(mean, across all concurrent requests)*, is computed by dividing the time taken for the test with the number of requests.
 You can find the full outputs on the ***images*** directory.
 
 ### Fixed concurrency
@@ -132,7 +132,7 @@ http://localhost:8090/hello/
 
 The implementation can be found on the ***httpserver*** directory.
 
-And now, we are going to test the server with `goab` as we did on the last test, just to see if exist difference about executing our own server or execute it on a web server as I did with **Nginx**.
+And now, we are going to test the server with `goab` as we did on the last test, just to see if exist difference about executing our own server or executing it on a web server as I did with **Nginx**.
 
 
 ## Results
@@ -152,7 +152,7 @@ And now, we are going to test the server with `goab` as we did on the last test,
 ![](/images/goab_httpserver_n100000_c80_k.png)
 
 
-If we compare it with the results of the last test, we can observe that the keep-alive feature is working better as we only have 1 request that is not supporting it (which is the first one, so it is normal). In the third case we obtain a smaller time, therefore, we have better results in the average of the latency and in the requests per second.
+If we compare it with the results of the last test, we can observe that the keep-alive feature is working better as we only have 1 request that is not supporting it (which is the first one, so it is normal). In the third case we obtain a smaller time, therefore, we have better results in the average of the latency and in the requests per second measures.
 
 
 ### Fixed amount of requests
@@ -171,6 +171,8 @@ If we compare it with the results of the last test, we can observe that the keep
 
 
 The behaviour is the same as before, increasing the concurrency we obtain a bigger latency. However, as we told on the fixed concurrency test, the time for the whole test is less than before, so the latency is smaller than the one we obtained with the web server.
+
+In general we obtained better results on our http server, which is normal, as with **Nginx** we are bein supported with another web server, which may be under more requests than in our own server, consequently, it is reflected on the latency.
 
 
 
